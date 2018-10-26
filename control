@@ -1,7 +1,7 @@
 Package: se.nosskirneh.autodismisssiri
 Name: AutoDismissSiri
 Depends: mobilesubstrate
-Version: 1.0
+Version: 1.1
 Architecture: iphoneos-arm
 Description: Automatically dismiss Siri after some idle time
 Maintainer: Andreas Henriksson
