@@ -24,7 +24,7 @@
     }
 }
 
-- (id)readPreferenceValue:(PSSpecifier*)specifier {
+- (id)readPreferenceValue:(PSSpecifier *)specifier {
     NSDictionary *preferences = [NSDictionary dictionaryWithContentsOfFile:prefPath];
 
     NSString *key = [specifier propertyForKey:@"key"];
@@ -33,7 +33,8 @@
     
     if ([key isEqualToString:@"enabled"]) {
         BOOL enableCell = [[preferences objectForKey:key] boolValue];
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] enabled:enableCell];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] enabled:enableCell];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] enabled:enableCell];
     }
 
     return preferences[key];
@@ -43,8 +44,10 @@
     NSMutableDictionary *preferences = [NSMutableDictionary dictionaryWithContentsOfFile:prefPath];
     NSString *key = [specifier propertyForKey:@"key"];
     
-    if ([key isEqualToString:@"enabled"])
-        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1] enabled:[value boolValue]];
+    if ([key isEqualToString:@"enabled"]) {
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2] enabled:[value boolValue]];
+        [self setCellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3] enabled:[value boolValue]];
+    }
 
     [preferences setObject:value forKey:key];
     [preferences writeToFile:prefPath atomically:YES];

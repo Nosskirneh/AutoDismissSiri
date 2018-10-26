@@ -2,12 +2,13 @@
 
 static BOOL enabled;
 static long long duration;
+static long long lockscreenDuration;
 
 static void reloadPrefs() {
-    NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-    [defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:prefPath]];
+    NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfFile:prefPath];
     enabled = defaults[@"enabled"] ? [defaults[@"enabled"] boolValue] : YES;
     duration = defaults[@"duration"] ? [defaults[@"duration"] integerValue] : 5;
+    lockscreenDuration = defaults[@"lockscreenDuration"] ? [defaults[@"lockscreenDuration"] integerValue] : 5;
 }
 
 void updateSettings(CFNotificationCenterRef center,
@@ -19,6 +20,11 @@ void updateSettings(CFNotificationCenterRef center,
 }
 
 
+@interface SBLockScreenManager : NSObject
++ (instancetype)sharedInstance;
+- (BOOL)isUILocked;
+@end
+
 @interface ACSpringBoardPluginController : NSObject
 - (void)_requestDismissal;
 @end
@@ -27,19 +33,24 @@ void updateSettings(CFNotificationCenterRef center,
 %hook ACSpringBoardPluginController
 
 - (void)siriViewController:(id)arg1 siriIdleAndQuietStatusDidChange:(BOOL)idle {
-    %log;
     %orig;
 
     if (!enabled)
         return;
 
     static NSTimer *timer;
-    if (idle)
-        timer = [NSTimer scheduledTimerWithTimeInterval:duration
+    if (idle) {
+        SBLockScreenManager *lockscreenManager = [%c(SBLockScreenManager) sharedInstance];
+        float d = lockscreenManager.isUILocked ? lockscreenDuration : duration;
+        if (d == 0)
+            return;
+
+        timer = [NSTimer scheduledTimerWithTimeInterval:d
                                                  target:self
                                                selector:@selector(dismiss:)
                                                userInfo:nil
                                                 repeats:NO];
+    }
     else if (timer)
         [timer invalidate];
 
@@ -47,7 +58,6 @@ void updateSettings(CFNotificationCenterRef center,
 
 %new
 - (void)dismiss:(NSTimer *)timer {
-    %log;
     [timer invalidate];
     [self _requestDismissal];
 }

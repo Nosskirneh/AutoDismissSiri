@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>items</key>
-	<array>
-		<!-- Header -->
+    <key>items</key>
+    <array>
+        <!-- Header -->
         <dict>
             <key>cell</key>
             <string>PSGroupCell</string>
@@ -13,13 +13,10 @@
         </dict>
 
 
-		<!-- Timer -->
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Settings</string>
-		</dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+        </dict>
 
         <dict>
             <key>cell</key>
@@ -36,27 +33,65 @@
             <string>se.nosskirneh.autodismisssiri/preferencesChanged</string>
         </dict>
 
-		<dict>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>key</key>
-			<string>duration</string>
+        <!-- General -->
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>General</string>
+        </dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSSliderCell</string>
+            <key>key</key>
+            <string>duration</string>
             <key>isSegmented</key>
             <true/>
             <key>showValue</key>
             <true/>
-			<key>min</key>
-			<real>1</real>
+            <key>min</key>
+            <real>0</real>
             <key>max</key>
             <real>30</real>
-			<key>default</key>
-			<string>5</string>
-			<key>PostNotification</key>
+            <key>default</key>
+            <string>5</string>
+            <key>PostNotification</key>
             <string>se.nosskirneh.autodismisssiri/preferencesChanged</string>
-		</dict>
+        </dict>
 
-		<!-- About -->
-		<dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Lockscreen</string>
+            <key>footerAlignment</key>
+            <integer>0</integer>
+            <key>footerText</key>
+            <string>Choose 0 for no auto dismissal in respective mode.</string>
+        </dict>
+
+        <dict>
+            <key>cell</key>
+            <string>PSSliderCell</string>
+            <key>key</key>
+            <string>lockscreenDuration</string>
+            <key>isSegmented</key>
+            <true/>
+            <key>showValue</key>
+            <true/>
+            <key>min</key>
+            <real>0</real>
+            <key>max</key>
+            <real>30</real>
+            <key>default</key>
+            <string>5</string>
+            <key>PostNotification</key>
+            <string>se.nosskirneh.autodismisssiri/preferencesChanged</string>
+        </dict>
+
+        <!-- About -->
+        <dict>
             <key>cell</key>
             <string>PSGroupCell</string>
             <key>label</key>
@@ -101,8 +136,8 @@
             <string>© 2018 Andreas Henriksson</string>
         </dict>
 
-	</array>
-	<key>title</key>
-	<string></string>
+    </array>
+    <key>title</key>
+    <string></string>
 </dict>
 </plist>
